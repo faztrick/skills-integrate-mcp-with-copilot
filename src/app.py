@@ -116,6 +116,7 @@ def login(username: str, password: str, response: Response):
     if username in teachers and teachers[username] == password:
         session_id = str(uuid.uuid4())
         sessions[session_id] = {"username": username}
+        # Note: In production with HTTPS, add secure=True to the cookie
         response.set_cookie(key="session_id", value=session_id, httponly=True)
         return {"message": "Login successful", "username": username}
     raise HTTPException(status_code=401, detail="Invalid credentials")
